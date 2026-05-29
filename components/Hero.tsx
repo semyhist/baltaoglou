@@ -34,8 +34,34 @@ export default function Hero() {
   const smoothContentY = useSpring(contentY, { stiffness: 50, damping: 25 });
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.65;
+    const video = videoRef.current;
+    if (video) {
+      video.playbackRate = 0.65;
+
+      const handleVideoLoad = () => {
+        setVideoLoaded(true);
+      };
+
+      // Add native event listeners to avoid React hydration race conditions
+      video.addEventListener("loadeddata", handleVideoLoad);
+      video.addEventListener("canplay", handleVideoLoad);
+
+      // If the video is already loaded from cache, trigger load state immediately
+      if (video.readyState >= 2) {
+        handleVideoLoad();
+      }
+
+      // Explicitly trigger play to bypass browser autoplay policies
+      video.play().catch((err) => {
+        console.log("Autoplay blocked, retrying muted:", err);
+        video.muted = true;
+        video.play().catch((e) => console.error("Muted play blocked:", e));
+      });
+
+      return () => {
+        video.removeEventListener("loadeddata", handleVideoLoad);
+        video.removeEventListener("canplay", handleVideoLoad);
+      };
     }
   }, []);
 
