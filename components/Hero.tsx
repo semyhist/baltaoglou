@@ -73,13 +73,14 @@ export default function Hero() {
           muted
           loop
           playsInline
+          preload="auto"
           onLoadedData={() => setVideoLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ${
             videoLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* Local scene pack — loads instantly, no network dependency */}
-          <source src="/baltaoglu scenepack.mp4" type="video/mp4" />
+          {/* Optimized lite scene pack — loads faster on both mobile and desktop */}
+          <source src="/baltaoglouvideolite.mp4" type="video/mp4" />
         </video>
         {/* Fallback */}
         <div
