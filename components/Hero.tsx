@@ -105,8 +105,8 @@ export default function Hero() {
             videoLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* Optimized lite scene pack — loads faster on both mobile and desktop */}
-          <source src="/baltaoglouvideolite.mp4" type="video/mp4" />
+          {/* Handbrake ultra-compressed lite scene pack (3.2MB) — loads instantly */}
+          <source src="/Baltaoglouvideolitehandbrak.mp4" type="video/mp4" />
         </video>
         {/* Fallback */}
         <div
