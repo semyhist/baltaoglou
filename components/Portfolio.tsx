@@ -83,7 +83,7 @@ export default function Portfolio() {
             description="Ekim 2023'te kurulan, motor sporları (F1, MotoGP, WorldSBK) analiz platformu."
             accentColor="#2563EB"
             icon={Mic}
-            href="https://www.instagram.com/diabolica"
+            href="https://www.instagram.com/dia8olica/"
             span={1}
             logoSrc="/diabolicawhitebg.jpg"
             bgImage="https://pbs.twimg.com/media/HJLjwnSXIAAsNZL.jpg" // Diabolica background
