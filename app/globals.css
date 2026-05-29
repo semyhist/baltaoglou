@@ -1,26 +1,183 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ═══════════════════════════════════════════
+   DESIGN SYSTEM — Global Tokens
+   Değiştirmek istersen sadece burayı değiştir.
+═══════════════════════════════════════════ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Palette */
+  --color-ink:        #0A0A0A;
+  --color-ink-soft:   #1A1A1A;
+  --color-canvas:     #FAFAFA;
+  --color-surface:    #F4F4F5;
+  --color-border:     #E4E4E7;
+  --color-muted:      #71717A;
+  --color-blue:       #2563EB;
+  --color-blue-dim:   #1D4ED8;
+  --color-red:        #DC2626;
+  --color-night:      #050505;
+  --color-night-soft: #111111;
+  --color-night-ui:   #1C1C1C;
+  --color-night-line: #2A2A2A;
+
+  /* Typography */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Spacing scale — 4px base */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Radii */
+  --radius-sm:  8px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+  --radius-full: 999px;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ═══════════════════════════════════════════
+   BASE RESET
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #FAFAFA;
+  color: #0A0A0A;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
 }
+
+/* ═══════════════════════════════════════════
+   SCROLLBAR
+═══════════════════════════════════════════ */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #D4D4D8; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #2563EB; }
+
+/* ═══════════════════════════════════════════
+   MARQUEE ANIMATIONS
+   Her iki marquee birbirinden bağımsız hızda çalışır.
+═══════════════════════════════════════════ */
+@keyframes marquee         { from { transform: translateX(0); }     to { transform: translateX(-50%); } }
+@keyframes marquee-reverse { from { transform: translateX(-50%); }  to { transform: translateX(0); } }
+
+.animate-marquee         { animation: marquee         30s linear infinite; }
+.animate-marquee-reverse { animation: marquee-reverse 26s linear infinite; }
+
+.animate-marquee:hover,
+.animate-marquee-reverse:hover { animation-play-state: paused; }
+
+/* Ping for live indicators */
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+.animate-ping {
+  animation: ping 1.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+═══════════════════════════════════════════ */
+
+/* Display: çok büyük başlıklar için fluid sizing */
+.display-xl {
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+}
+.display-lg {
+  font-size: clamp(2.8rem, 6vw, 6rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+.display-md {
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+/* Eyebrow labels */
+.eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #71717A;
+}
+.eyebrow-blue { color: #2563EB; }
+.eyebrow-red  { color: #DC2626; }
+
+/* Body rhythm */
+.body-relaxed {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #52525B;
+}
+
+/* ═══════════════════════════════════════════
+   CARD BASE
+═══════════════════════════════════════════ */
+.card {
+  border-radius: var(--radius-lg);
+  border: 1px solid #E4E4E7;
+  background: #fff;
+  transition: transform 0.25s var(--ease-out-expo),
+              box-shadow 0.25s var(--ease-out-expo);
+}
+.card:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+}
+.card-dark {
+  border-color: #2A2A2A;
+  background: #111111;
+}
+.card-dark:hover {
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION UTILITIES
+═══════════════════════════════════════════ */
+.section-pad { padding: 6rem 1.5rem; }
+@media (min-width: 768px)  { .section-pad { padding: 8rem 3rem; } }
+@media (min-width: 1024px) { .section-pad { padding: 10rem 5rem; } }
+
+.container-inner {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ═══════════════════════════════════════════
+   MISC
+═══════════════════════════════════════════ */
+::selection { background: #2563EB22; color: #0A0A0A; }
+
+/* Prevent FOUC on video */
+video { display: block; }
